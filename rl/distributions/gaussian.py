@@ -28,7 +28,7 @@ class DiagonalGaussian(nn.Module):
         if deterministic is False:
             action = self.evaluate(x).sample()
         else:
-            action, _ = self(x)
+            action = self.evaluate(x).mean
 
         return action
 
