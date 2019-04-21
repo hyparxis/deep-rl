@@ -5,7 +5,7 @@ import numpy as np
 import functools
 import torch
 
-from .wrapper import WrapEnv
+from .wrappers import WrapEnv
 def get_normalization_params(iter, policy, env_fn, noise_std):
     print("Gathering input normalization data using {0} steps, noise = {1}...".format(iter, noise_std))
 

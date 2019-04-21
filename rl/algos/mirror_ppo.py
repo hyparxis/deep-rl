@@ -8,28 +8,6 @@ from torch.distributions import kl_divergence
 import numpy as np
 from rl.algos import PPO
 
-from abc import ABCMeta, abstractmethod
-
-class SymmetricEnv(metaclass=ABCMeta):    
-    @property
-    @abstractmethod
-    def obs_symmetry_matrix(self):
-        pass
-
-    @property
-    @abstractmethod
-    def action_symmetry_matrix(self):
-        pass
-
-def get_symmetry_matrix(mirrored):
-    numel = len(mirrored)
-    mat = np.zeros((numel, numel))
-
-    for idx in zip(np.arange(numel), mirrored):
-        mat[idx] = 1
-
-    return mat
-
 # TODO:
 # env.mirror() vs env.matrix?
 
@@ -41,20 +19,8 @@ class MirrorPPO(PPO):
                env_fn
     ):
         env = env_fn()
-
-        env.obs_symmetry_matrix = get_symmetry_matrix(
-            [0, 1,          # y, z
-             5, 6, 7,       # right leg pos
-             2, 3, 4,       # left leg pos
-             8, 9, 10,      # xvel, yvel, zvel
-             14, 15, 16,    # right leg vel    
-             11, 12, 13]    # left leg vel
-        )
-
-        env.action_symmetry_matrix = get_symmetry_matrix(
-            [3, 4, 5, 
-             0, 1, 2]
-        )
+        mirror_observation = env.mirror_observation
+        mirror_action = env.mirror_action
 
         minibatch_size = self.minibatch_size or advantages.numel()
 
@@ -111,8 +77,8 @@ class MirrorPPO(PPO):
 
                     # Mirror Symmetry Loss
                     _, deterministic_actions = policy(obs_batch)
-                    _, mirror_actions = policy(obs_batch @ torch.Tensor(env.obs_symmetry_matrix))
-                    mirror_actions =  mirror_actions @ torch.Tensor(env.action_symmetry_matrix)
+                    _, mirror_actions = policy(mirror_observation(obs_batch))
+                    mirror_actions = mirror_action(mirror_actions)
 
                     mirror_loss = 4 * (deterministic_actions - mirror_actions).pow(2).mean()
 
