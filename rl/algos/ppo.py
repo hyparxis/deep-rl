@@ -122,50 +122,6 @@ class PPO:
 
         ray.init()
 
-    @staticmethod
-    def add_arguments(parser):
-        parser.add_argument("--n_itr", type=int, default=10000,
-                            help="Number of iterations of the learning algorithm")
-        
-        parser.add_argument("--lr", type=float, default=3e-4,
-                            help="Adam learning rate")
-
-        parser.add_argument("--eps", type=float, default=1e-5,
-                            help="Adam epsilon (for numerical stability)")
-        
-        parser.add_argument("--lam", type=float, default=0.95,
-                            help="Generalized advantage estimate discount")
-
-        parser.add_argument("--gamma", type=float, default=0.99,
-                            help="MDP discount")
-        
-        parser.add_argument("--entropy_coeff", type=float, default=0.0,
-                            help="Coefficient for entropy regularization")
-
-        parser.add_argument("--clip", type=float, default=0.2,
-                            help="Clipping parameter for PPO surrogate loss")
-
-        parser.add_argument("--minibatch_size", type=int, default=64,
-                            help="Batch size for PPO updates")
-
-        parser.add_argument("--epochs", type=int, default=10,
-                            help="Number of optimization epochs per PPO update")
-
-        parser.add_argument("--num_steps", type=int, default=5096,
-                            help="Number of sampled timesteps per gradient estimate")
-
-        parser.add_argument("--use_gae", type=bool, default=True,
-                            help="Whether or not to calculate returns using Generalized Advantage Estimation")
-
-        parser.add_argument("--num_procs", type=int, default=1,
-                            help="Number of threads to train on")
-
-        parser.add_argument("--max_grad_norm", type=float, default=0.5,
-                            help="Value to clip gradients at.")
-
-        parser.add_argument("--max_traj_len", type=int, default=1000,
-                            help="Max episode horizon")
-
     def save(self, policy):
         policy.env_name = self.env_name
 
@@ -362,4 +318,46 @@ class PPO:
                 self.save(policy)
 
 
-            
+    @staticmethod
+    def add_arguments(parser):
+        parser.add_argument("--n_itr", type=int, default=10000,
+                            help="Number of iterations of the learning algorithm")
+        
+        parser.add_argument("--lr", type=float, default=3e-4,
+                            help="Adam learning rate")
+
+        parser.add_argument("--eps", type=float, default=1e-5,
+                            help="Adam epsilon (for numerical stability)")
+        
+        parser.add_argument("--lam", type=float, default=0.95,
+                            help="Generalized advantage estimate discount")
+
+        parser.add_argument("--gamma", type=float, default=0.99,
+                            help="MDP discount")
+        
+        parser.add_argument("--entropy_coeff", type=float, default=0.0,
+                            help="Coefficient for entropy regularization")
+
+        parser.add_argument("--clip", type=float, default=0.2,
+                            help="Clipping parameter for PPO surrogate loss")
+
+        parser.add_argument("--minibatch_size", type=int, default=64,
+                            help="Batch size for PPO updates")
+
+        parser.add_argument("--epochs", type=int, default=10,
+                            help="Number of optimization epochs per PPO update")
+
+        parser.add_argument("--num_steps", type=int, default=5096,
+                            help="Number of sampled timesteps per gradient estimate")
+
+        parser.add_argument("--use_gae", type=bool, default=True,
+                            help="Whether or not to calculate returns using Generalized Advantage Estimation")
+
+        parser.add_argument("--num_procs", type=int, default=1,
+                            help="Number of threads to train on")
+
+        parser.add_argument("--max_grad_norm", type=float, default=0.5,
+                            help="Value to clip gradients at.")
+
+        parser.add_argument("--max_traj_len", type=int, default=1000,
+                            help="Max episode horizon")
