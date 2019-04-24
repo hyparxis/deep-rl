@@ -193,16 +193,7 @@ class Logger():
                 plt.xlabel(self.viz_config["xlabel"])
                 plt.title("{0}: {1}".format(header[i], self.name))
 
-                plt.show()
-                plt.draw()
-
-                image = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
-                image = image.reshape(fig.canvas.get_width_height()[::-1] + (3, ))
-                image = np.transpose(image, (2, 0, 1))
-
-                plt.close(fig)
-
-                self.wins[i] = self.viz.image(image, win=self.wins[i])
+                self.wins[i] = self.viz.matplot(plt, win=self.wins[i])
 
     def _load_data(self):
         log_file = open(self.output_dir, 'r')
