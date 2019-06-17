@@ -87,11 +87,11 @@ class PPOBuffer:
             self.returns,
             self.values
         )
-self,
-              env_fn,
-              policy, 
-              n_itr,
-              logger=None
+
+class PPO:
+    def __init__(self, 
+                 args=None,
+                 gamma=None, 
                  lam=None, 
                  lr=None, 
                  eps=None,
@@ -178,8 +178,6 @@ self,
 
         filetype = ".pt" # pytorch model
         torch.save(policy, os.path.join("./trained_models", self.name + filetype))
-
-
 
     @ray.remote
     @torch.no_grad()
