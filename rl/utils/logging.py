@@ -43,7 +43,7 @@ class Logger():
             from visdom import Visdom
             self.viz = Visdom()
             self.wins = []
-            self.viz_config = self.config_monitor()
+            self.viz_config = self.config_monitor(config_path="../config/monitor.ini")
         else:
             self.viz = None
 
