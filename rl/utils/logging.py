@@ -19,6 +19,11 @@ matplotlib.rcParams.update({'font.size': 8})
 
 #from scipy.signal import medfilt
 
+
+viz_config = {"xlabel":"Iterations",
+"xlim":"Variable"}
+
+
 class Logger():
     def __init__(self, args, viz=True, viz_list=[]):
         self.ansi = dict(
@@ -43,7 +48,8 @@ class Logger():
             from visdom import Visdom
             self.viz = Visdom()
             self.wins = []
-            self.viz_config = self.config_monitor(config_path="../config/monitor.ini")
+            #self.viz_config = self.config_monitor(config_path="../config/monitor.ini")
+            self.viz_config = {"xlabel":"Iterations", "xlim":"Variable"}
         else:
             self.viz = None
 
@@ -156,12 +162,8 @@ class Logger():
         if config_path is None:
             config_path = os.path.join(os.path.dirname(__file__), "../config/monitor.ini")
 
-        print(config_path)
-
         config = configparser.ConfigParser()
         config.read(config_path)
-
-        print(config)
 
         return config["monitor"]
 
