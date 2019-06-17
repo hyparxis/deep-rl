@@ -248,6 +248,8 @@ class PPO:
               n_itr,
               logger=None):
 
+        print(self.n_proc)
+
         old_policy = deepcopy(policy)
 
         optimizer = optim.Adam(policy.parameters(), lr=self.lr, eps=self.eps)
