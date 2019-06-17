@@ -156,8 +156,12 @@ class Logger():
         if config_path is None:
             config_path = os.path.join(os.path.dirname(__file__), "../config/monitor.ini")
 
+        print(config_path)
+
         config = configparser.ConfigParser()
         config.read(config_path)
+
+        print(config)
 
         return config["monitor"]
 
