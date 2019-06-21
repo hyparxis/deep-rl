@@ -20,8 +20,7 @@ matplotlib.rcParams.update({'font.size': 8})
 #from scipy.signal import medfilt
 
 
-viz_config = {"xlabel":"Iterations",
-"xlim":"Variable"}
+#viz_config = {"xlabel":"Iterations", "xlim":"Variable"}
 
 
 class Logger():
